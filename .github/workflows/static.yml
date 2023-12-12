@@ -52,4 +52,5 @@ jobs:
             uses: JamesIves/github-pages-deploy-action@3.6.2
             with: # Set the secret as an input
               GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+              BRANCH: main
               FOLDER: site
