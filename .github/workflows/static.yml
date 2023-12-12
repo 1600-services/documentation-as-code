@@ -67,7 +67,7 @@ jobs:
         - run: ls -R site
         - name: Deploy to GitHub Pages
           id: deployment
-          uses: actions/deploy-pages@v3
+          uses: actions/deploy-pages@v1
           with:
             token: ${{ secrets.GITHUB_TOKEN }}
             artifact_name: 'site'
