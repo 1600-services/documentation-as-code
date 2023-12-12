@@ -1,12 +1,11 @@
-# The name of the workflow as it will appear in the Actions tab 
-# of the GitHub repository.
 name: build-web-site
 
-# Run this workflow every time a new commit pushed to your repository
-on: push
+on:
+  push:
+    branches:
+      - main
 
 jobs:
-
   StyleCheck:
     name: Style and Voice
     runs-on: ubuntu-latest
@@ -22,29 +21,15 @@ jobs:
       env:
         GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
-  # Set the job key. The key is displayed as the job name
-  # when a job name is not provided
   build-deploy:
-    #Name of the job
-    name: Build github pages
-
-    #Set the type of machine to run on
+    name: Build and Deploy
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
     env: 
         MARP_VERSION: 0.21.1
     steps:
-       # Checks out a copy of your repository on the ubuntu-latest machine
-       # https://github.com/actions/checkout
       - name: Checkout code
         uses: actions/checkout@v2  
 
-      # Runs the website build
       - run: sudo  wget -qO- https://github.com/marp-team/marp-cli/releases/download/v0.21.1/marp-cli-v$MARP_VERSION-linux.tar.gz | tar xvz
-      - run: chmod +x marp && export PATH=$PATH:$(pwd) &&  mkdir site && marp slides/README.md --html -o site/index.html
-      # https://github.com/actions/upload-artifact
-      - uses: actions/upload-artifact@v2
-        with:
-          name: slides
-          path: site/index.html
-
+      - run: chmod +x marp && export
