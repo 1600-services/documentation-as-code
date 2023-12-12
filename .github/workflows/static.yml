@@ -69,6 +69,7 @@ jobs:
             with:
               name: site
               path: './site'
+          - run: ls -R site
           - name: Deploy to GitHub Pages
             id: deployment
             uses: actions/deploy-pages@v3
