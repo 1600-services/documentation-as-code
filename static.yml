@@ -22,22 +22,39 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  # Single deploy job since we're just deploying
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Setup Pages
-        uses: actions/configure-pages@v4
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v2
-        with:
-          # Upload entire repository
-          path: '.'
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v3
+
+    build:
+        #Name of the job
+        name: Build github pages
+        runs-on: ubuntu-latest
+        env: 
+            MARP_VERSION: 0.21.1
+        steps:
+           # Checks out a copy of your repository on the ubuntu-latest machine
+           # https://github.com/actions/checkout
+          - name: Checkout code
+            uses: actions/checkout@v2 
+            with:
+                clean: true
+                token: ${{ github.token }}
+    
+          # Runs the website build
+          - run: sudo  wget -qO- https://github.com/marp-team/marp-cli/releases/download/v0.21.1/marp-cli-v$MARP_VERSION-linux.tar.gz | tar xvz
+          - run: chmod +x marp && export PATH=$PATH:$(pwd) &&  mkdir site && marp slides/README.md --html -o site/index.html
+          - run: ls -R site
+          - run: du -sh site
+          # https://github.com/actions/upload-artifact
+          - uses: actions/upload-artifact@v2
+            with:
+              name: site
+              path: site/index.html
+
+
+
+            #https://github.com/marketplace/actions/deploy-to-github-pages
+          - name: Deploy to GitHub Pages
+            uses: JamesIves/github-pages-deploy-action@3.6.2
+            with: # Set the secret as an input
+               GITHUB_TOKEN: ${{ secrets.DEPLOYMENT_ACCESS_KEY }}
+               BRANCH: gh_pages
+               FOLDER: site
