@@ -47,6 +47,8 @@ jobs:
               name: slides
               path: site/index.html
 
+          - name: ls
+            run: ls
           #https://github.com/marketplace/actions/deploy-to-github-pages
           - name: Deploy to GitHub Pages
             uses: JamesIves/github-pages-deploy-action@v4
