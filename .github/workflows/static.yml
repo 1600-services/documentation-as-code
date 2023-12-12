@@ -47,10 +47,10 @@ jobs:
               name: slides
               path: site/index.html
 
-
           #https://github.com/marketplace/actions/deploy-to-github-pages
           - name: Deploy to GitHub Pages
             uses: JamesIves/github-pages-deploy-action@v4
             with: # Set the secret as an input
+              ssh-key: ${{ secrets.DEPLOYMENT_ACCESS_KEY }}
               BRANCH: main
               FOLDER: site
