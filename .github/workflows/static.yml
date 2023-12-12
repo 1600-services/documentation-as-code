@@ -69,4 +69,4 @@ jobs:
           uses: actions/deploy-pages@v3
           with:
             github_token: ${{ secrets.GITHUB_TOKEN }}
-            folder: 'site'
+            artifact_name: 'site'
