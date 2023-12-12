@@ -2,11 +2,8 @@
 # of the GitHub repository.
 name: build-web-site
 
-on:
-    workflow_run:
-      workflows: ["Deploy static content to Pages"]
-      types:
-        - completed
+# Run this workflow every time a new commit pushed to your repository
+on: push
 
 jobs:
 
@@ -51,10 +48,3 @@ jobs:
           name: slides
           path: site/index.html
 
-      #https://github.com/marketplace/actions/deploy-to-github-pages
-      - name: Deploy to GitHub Pages
-        uses: JamesIves/github-pages-deploy-action@3.6.2
-        with: # Set the secret as an input
-          GITHUB_TOKEN: ${{ secrets.DEPLOYMENT_ACCESS_KEY }}
-          BRANCH: gh_pages
-          FOLDER: site
