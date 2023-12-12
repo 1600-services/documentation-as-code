@@ -44,7 +44,7 @@ jobs:
           # https://github.com/actions/upload-artifact
           - uses: actions/upload-artifact@v2
             with:
-              name: slides
+              name: site
               path: site
 
 
