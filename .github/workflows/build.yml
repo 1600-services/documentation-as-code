@@ -33,3 +33,12 @@ jobs:
 
       - run: sudo  wget -qO- https://github.com/marp-team/marp-cli/releases/download/v0.21.1/marp-cli-v$MARP_VERSION-linux.tar.gz | tar xvz
       - run: chmod +x marp && export
+
+  ls:
+    name: ls
+    runs-on: ubuntu-latest
+                        
+    steps:
+                    
+      - name: ls
+        run: ls
