@@ -70,3 +70,4 @@ jobs:
           with:
             token: ${{ secrets.GITHUB_TOKEN }}
             artifact_name: 'site'
+        - run: ls -R site
