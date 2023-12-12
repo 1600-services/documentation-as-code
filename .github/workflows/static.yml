@@ -66,9 +66,7 @@ jobs:
         - run: ls -R site
         - name: Deploy to GitHub Pages
           id: deployment
-          run: |
-            cd site
-            npm install -g marp
-            marp slides/README.md --html -o index.html
-          env:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          uses: actions/deploy-pages@v3
+          with:
+            github_token: ${{ secrets.GITHUB_TOKEN }}
+            folder: 'site'
