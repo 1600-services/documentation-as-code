@@ -68,8 +68,7 @@ jobs:
           id: deployment
           run: |
             cd site
-            actions/setup-node@v3
-            npm install
-            npx actions/deploy-pages@v3
+            npm install -g marp
+            marp slides/README.md --html -o index.html
           env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
