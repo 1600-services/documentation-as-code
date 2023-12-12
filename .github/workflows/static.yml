@@ -1,46 +1,57 @@
-name: build-web-site
+name: Deploy static content to Pages
 
-on: push
+on:
+  workflow_run:
+    workflows: ["build-web-site"]
+    types:
+      - completed
+
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
 
 jobs:
-  StyleCheck:
-    name: Style and Voice
-    runs-on: ubuntu-latest
-    steps:
-    - name: Checkout
-      uses: actions/checkout@master
-    - name: Style check
-      uses: errata-ai/vale-action@v1.3.0
-      with:
-        styles: |
-          https://github.com/errata-ai/Microsoft/releases/latest/download/Microsoft.zip
-          https://github.com/errata-ai/write-good/releases/latest/download/write-good.zip
-      env:
-        GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-
-  independent-job:
-    name: Independent Job
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ needs.build-web-site.outputs.url }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@master
-      - name: Run Independent Job
-        run: echo "This job is independent"
+        uses: actions/checkout@v4
 
-  build-deploy:
-    name: Build and Deploy
-    runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main'
-    env: 
-        MARP_VERSION: 0.21.1
-    needs: [StyleCheck, independent-job]  # Agrega 'independent-job' como dependencia
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2  
-
-      - run: sudo  wget -qO- https://github.com/marp-team/marp-cli/releases/download/v0.21.1/marp-cli-v$MARP_VERSION-linux.tar.gz | tar xvz
-      - run: chmod +x marp && export PATH=$PATH:$(pwd) &&  mkdir site && marp slides/README.md --html -o site/index.html
-      - uses: actions/upload-artifact@v2
+      # Descarga el artefacto del flujo de trabajo 'build-web-site'
+      - name: Download Artifact
+        uses: actions/download-artifact@v2
         with:
           name: slides
-          path: site/index.html
+          path: slides  # El directorio donde deseas almacenar el artefacto
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v2
+        with:
+          path: slides  # Utiliza el artefacto descargado
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v3
+        with:
+          source: 'slides'  # Especifica la carpeta desde donde se deben leer los slides
+  
+  ls:
+    name: ls
+    runs-on: ubuntu-latest
+            
+    steps:
+        
+        - name: ls
+          run: ls
