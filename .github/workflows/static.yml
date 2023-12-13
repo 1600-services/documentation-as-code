@@ -50,4 +50,4 @@ jobs:
             with: # Set the secret as an input
               BRANCH: main
               FOLDER: site
-              token: ${{ github.token }}
+              token: ${{ secrets.GH_DAC_TOKEN }}
