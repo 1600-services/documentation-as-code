@@ -50,4 +50,4 @@ jobs:
             with: # Set the secret as an input
               BRANCH: gh-pages
               FOLDER: site
-              TOKEN: ${{ secrets.GH_DAC_TOKEN }} 
+              TOKEN: ${{ secrets.GH_DAC_TOKEN }}  
