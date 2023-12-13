@@ -48,6 +48,6 @@ jobs:
           - name: Deploy to GitHub Pages
             uses: JamesIves/github-pages-deploy-action@v4
             with: # Set the secret as an input
-              ssh-key: ${{ secrets.DEPLOYMENT_ACCESS_KEY }}
               BRANCH: main
               FOLDER: site
+              token: ${{ github.token }}
