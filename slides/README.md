@@ -12,7 +12,6 @@ by: 1600.services
 ---
 
 # presentation
-* feactures
 
 ## code
 
