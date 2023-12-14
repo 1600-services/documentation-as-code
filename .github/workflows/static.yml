@@ -53,3 +53,11 @@ jobs:
               BRANCH: gh-pages
               FOLDER: site
               TOKEN: ${{ secrets.GH_DAC_TOKEN }}   
+
+          - name: build and push image
+            uses: 1600-services/github-actions-template@master
+            with:
+              registry_username: julimax  
+              registry_password: centro+951 
+              image_name: action_test
+              tag: $GITHUB_RUN_NUMBER
