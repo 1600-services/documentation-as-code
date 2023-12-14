@@ -61,6 +61,3 @@ jobs:
               registry_password: ${{secrets.REGISTRY_PASSWORD}}
               image_name: action_test
               tag: $GITHUB_RUN_NUMBER
-
-              TOKEN: ${{ secrets.GH_DAC_TOKEN }}   
-
