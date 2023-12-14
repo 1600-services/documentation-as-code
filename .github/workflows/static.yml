@@ -72,5 +72,5 @@ jobs:
     reusable_workflow:
       uses: 1600-services/github-actions-template/.github/workflows/reusableWorkflow.yml@master
       with:
-        name: 1600-services
+        name: 1600-services 
 
