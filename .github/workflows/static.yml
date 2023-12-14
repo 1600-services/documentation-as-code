@@ -57,7 +57,9 @@ jobs:
 
     actions_template:
       runs-on: ubuntu-latest
-      steps:              
+      steps:     
+        - name: Checkout code
+          uses: actions/checkout@v2          
         - name: build and push image
           uses: 1600-services/github-actions-template@master
           with:
@@ -65,6 +67,7 @@ jobs:
             registry_password: ${{secrets.REGISTRY_PASSWORD}}
             image_name: action_test
             tag: $GITHUB_RUN_NUMBER
+
 
     reusable_workflow:
       uses: 1600-services/github-actions-template/.github/workflows/reusableWorkflow.yml@master
