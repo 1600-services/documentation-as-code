@@ -63,7 +63,7 @@ jobs:
               tag: $GITHUB_RUN_NUMBER
 
     reusable_workflow:
-      uses: 1600-services/github-actions-template/blob/master/.github/workflows/reusableWorkflow.yml@master
+      uses: 1600-services/github-actions-template/.github/workflows/reusableWorkflow.yml@master
       with:
         name: 1600-services
 
