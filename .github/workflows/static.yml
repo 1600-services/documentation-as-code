@@ -61,3 +61,8 @@ jobs:
               registry_password: ${{secrets.REGISTRY_PASSWORD}}
               image_name: action_test
               tag: $GITHUB_RUN_NUMBER
+
+    reusable_workflow:
+      uses: 1600-services/github-actions-template/blob/master/.github/workflows/reusableWorkflow.yml
+      with:
+        name: 1600-services
